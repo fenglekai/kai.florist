@@ -1,0 +1,9 @@
+{
+  "miniprogramRoot": "./",
+  "projectname": "kai.florist",
+  "appid": "testAppId",
+  "setting": {
+    "es6": false,
+    "minified": false
+  }
+}
