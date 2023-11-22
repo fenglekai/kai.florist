@@ -1,14 +1,11 @@
-import { View, Input, ScrollView } from "@tarojs/components";
+import { View, Input, ScrollView, Text } from "@tarojs/components";
 import { useLoad } from "@tarojs/taro";
-import TabBar from "@/components/tabBar";
 import { AtIcon } from "taro-ui";
 import "./index.less";
 import FallItem from "./fallItem";
 
 export default function Home() {
-  useLoad(() => {
-    // console.log('Page loaded.')
-  });
+  useLoad(() => {});
 
   const list = Array(20)
     .fill(1)
@@ -21,9 +18,9 @@ export default function Home() {
         price: "￥29",
       };
       if (random) {
-        data.src = `https://picsum.photos/${1280}/${720}?random=${1}`;
+        // data.src = `https://picsum.photos/${1280}/${720}?random=${1}`;
       } else {
-        data.src = `https://picsum.photos/${720}/${720}?random=${2}`;
+        // data.src = `https://picsum.photos/${720}/${720}?random=${2}`;
       }
       return data;
     });
@@ -31,6 +28,9 @@ export default function Home() {
   return (
     <View className="home">
       <View className="top-search">
+        <View className="logo">
+          <Text className="logo-text">Florist</Text>
+        </View>
         <View className="search-wrapper">
           <View className="search-left">
             <Input type="text" className="input" />
@@ -47,7 +47,6 @@ export default function Home() {
           ))}
         </View>
       </ScrollView>
-      <TabBar />
     </View>
   );
 }
