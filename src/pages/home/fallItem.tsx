@@ -1,5 +1,6 @@
 import { View, Image, Text } from "@tarojs/components";
 import { useRef } from "react";
+import empty from '@/assets/image/empty.png'
 
 export default function FallItem(props) {
   const itemsRef = useRef<HTMLElement>();
@@ -13,7 +14,7 @@ export default function FallItem(props) {
     <View ref={itemsRef} className="fall-item" key={props.itemKey}>
       <Image
         className="fall-img"
-        src={props.item.src}
+        src={props.item.src || empty}
         onLoad={handleLoad}
         fadeIn
       ></Image>
