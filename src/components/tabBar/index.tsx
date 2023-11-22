@@ -9,7 +9,7 @@ export default function TabBar() {
   function handleClick(tab: number) {
     setCurrent(tab)
     const dict = ['home', 'cate', 'user'];
-    Taro.redirectTo({
+    Taro.switchTab({
       url: `/pages/${dict[tab]}/index`,
     })
   }
