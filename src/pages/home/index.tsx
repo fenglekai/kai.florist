@@ -16,7 +16,7 @@ export default function Home() {
         src: "",
         title: "这是标题",
         description: "这是一段描述",
-        price: "￥29",
+        price: "29",
       };
       if (random) {
         // data.src = `https://picsum.photos/${1280}/${720}?random=${1}`;
@@ -46,7 +46,7 @@ export default function Home() {
               <Input type="text" className="input" />
             </View>
             <View className="search-right">
-              <AtIcon value="search" size="30" color="#6190E8"></AtIcon>
+              <AtIcon value="search" size="30"></AtIcon>
             </View>
           </View>
         </View>
@@ -67,7 +67,7 @@ export default function Home() {
               <Input type="text" className="input" />
             </View>
             <View className="search-right">
-              <AtIcon value="search" size="30" color="#6190E8"></AtIcon>
+              <AtIcon value="search" size="30"></AtIcon>
             </View>
           </View>
         </View>
