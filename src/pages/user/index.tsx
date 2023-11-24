@@ -1,4 +1,4 @@
-import { ScrollView, View, Text, Image } from "@tarojs/components";
+import { ScrollView, View, Text } from "@tarojs/components";
 import Card from "@/components/card";
 import { AtActivityIndicator, AtAvatar, AtIcon } from "taro-ui";
 import { useEffect, useState } from "react";
