@@ -1,0 +1,76 @@
+@import '@/app.less';
+
+.tab-wrapper {
+  height: calc(100vh - 120px - 105px);
+  margin-bottom: 120px;
+  display: flex;
+  .tab-nav {
+    width: auto;
+    background-color: @bg-color;
+    font-size: 28px;
+    .nav-item {
+      padding: 20px 40px;
+    }
+    .active {
+      background-color: #ffffff;
+      color: @primary-color;
+      font-weight: 600;
+    }
+  }
+  .tab-list {
+    padding: 0 20px;
+    flex: 1;
+    font-size: 28px;
+
+    .list-item {
+      position: relative;
+      .hidden {
+        visibility: hidden;
+        padding: 12px 0;
+      }
+      .nav-bar {
+        position: sticky;
+        top: 0;
+        left: 0;
+        width: 100%;
+        backdrop-filter: blur(20px);
+        padding: 12px 0;
+        z-index: 600;
+      }
+    }
+
+    .card-wrapper {
+      margin-bottom: 36px;
+      display: flex;
+      gap: 18px;
+      .card-left {
+        max-width: 180px;
+      }
+      .card-main {
+        flex:1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .card-primary-text {
+          font-size: 32px;
+        }
+        .card-second-text {
+          font-size: 24px;
+          color: gray;
+        }
+        .card-price {
+          &::before {
+            content: '￥';
+            font-size: 24px;
+          }
+        }
+      }
+      .card-right {
+        display: flex;
+        align-items: center;
+        font-size: 42px;
+        color: gray;
+      }
+    }
+  }
+}
