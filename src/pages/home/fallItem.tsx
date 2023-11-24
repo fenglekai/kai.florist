@@ -1,8 +1,8 @@
 import { View, Image, Text } from "@tarojs/components";
-import { useRef } from "react";
+import { ReactChild, ReactFragment, ReactPortal, useRef } from "react";
 import empty from '@/assets/image/empty.png'
 
-export default function FallItem(props) {
+export default function FallItem(props: { itemKey: string | number | undefined; item: { src: any; title: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; description: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; price: boolean | ReactChild | ReactFragment | ReactPortal | null | undefined; }; }) {
   const itemsRef = useRef<HTMLElement>();
   function handleLoad() {
     if (!itemsRef.current) return;

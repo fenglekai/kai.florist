@@ -1,0 +1,46 @@
+.waterfall-container {
+  display: grid;
+  column-gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: minmax(1px, 1px);
+  .fall-item {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    min-height: 100px;
+    position: relative;
+    margin-bottom: 12px;
+    border-radius: 20px;
+    box-shadow: 4px 8px 4px rgba(156, 152, 152, 0.1);
+    background-color: #ffffff;
+    .fall-img {
+      border-radius: 20px;
+    }
+
+    .fall-info {
+      display: flex;
+      padding: 0 12px;
+      .info-left {
+        flex: 1;
+        .fall-title {
+          font-size: 32px;
+          display: block;
+        }
+        .fall-description {
+          font-size: 20px;
+          display: block;
+          color: gray;
+        }
+      }
+      .info-right {
+        text-align: end;
+        font-size: 32px;
+        color: gray;
+        &::before {
+          content: '￥';
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}

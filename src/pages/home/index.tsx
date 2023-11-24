@@ -1,9 +1,9 @@
 import { View, Input, ScrollView, Text } from "@tarojs/components";
 import { useLoad } from "@tarojs/taro";
 import { AtIcon } from "taro-ui";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import WaterfallLayout from "@/components/waterfallLayout";
 import "./index.less";
-import FallItem from "./fallItem";
 
 export default function Home() {
   useLoad(() => {});
@@ -71,11 +71,7 @@ export default function Home() {
             </View>
           </View>
         </View>
-        <View className="home-container">
-          {list.map((item, key) => (
-            <FallItem item={item} itemKey={key} key={key} />
-          ))}
-        </View>
+        <WaterfallLayout list={list}>{{ default: true }}</WaterfallLayout>
       </ScrollView>
     </View>
   );
