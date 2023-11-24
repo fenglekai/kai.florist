@@ -4,11 +4,12 @@ import FallItem from "./fallItem";
 import "./index.less";
 
 export default function WaterfallLayout(props: {
+  className?: string;
   list: any[];
   children?: { default: useReactChild };
 }) {
   return (
-    <View className="waterfall-container">
+    <View className={`waterfall-container ${props.className}`}>
       {props.list.map((item, key) => (
         <FallItem item={item} itemKey={key} key={key}>
           {{

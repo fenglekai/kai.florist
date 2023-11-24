@@ -71,7 +71,7 @@ export default function Home() {
             </View>
           </View>
         </View>
-        <WaterfallLayout list={list}>{{ default: true }}</WaterfallLayout>
+        <WaterfallLayout className="home-waterfall" list={list}>{{ default: true }}</WaterfallLayout>
       </ScrollView>
     </View>
   );
