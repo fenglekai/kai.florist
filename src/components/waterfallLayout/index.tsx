@@ -1,10 +1,11 @@
 import { View } from "@tarojs/components";
+import { useReactChild } from "types";
 import FallItem from "./fallItem";
 import "./index.less";
 
 export default function WaterfallLayout(props: {
   list: any[];
-  children?: { default: boolean };
+  children?: { default: useReactChild };
 }) {
   return (
     <View className="waterfall-container">
