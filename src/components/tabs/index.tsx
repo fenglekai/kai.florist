@@ -1,6 +1,5 @@
 import { ScrollView, View } from "@tarojs/components";
 import { useEffect, useState } from "react";
-import { debounce } from "@/utils/common";
 import "./index.less";
 import ContainList from "./containList";
 
@@ -58,7 +57,7 @@ export default function Tabs(props: PropsParams) {
         className="tab-list"
         scrollY
         scrollTop={scrollTop}
-        onScroll={debounce(handleScroll, 200)}
+        onScroll={handleScroll}
       >
         {props.tabList.map((item, index) => (
           <ContainList
