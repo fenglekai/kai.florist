@@ -35,11 +35,12 @@ export default function Cate() {
         map.set(item.cate, [item]);
       }
     });
+    const res: any[] = []
     map.forEach((item, key) => {
-      setTabList([...tabList, { nav: key, children: item }]);
+      res.push({ nav: key, children: item })
     });
-
-    // setTabList()
+    
+    setTabList(res);
   }
 
   const [tab, setTab] = useState(0);
