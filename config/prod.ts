@@ -29,5 +29,8 @@ export default {
     //       postProcess: (context) => ({ ...context, outputPath: path.join(staticDir, 'index.html') })
     //     }))
     // }
-  }
+  },
+  env: {
+    TARO_APP_API: '"http://127.0.0.1:7001"',
+  },
 } satisfies UserConfigExport
