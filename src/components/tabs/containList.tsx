@@ -1,7 +1,7 @@
-import { View, Image } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import { useEffect, useRef } from "react";
 import { AtIcon } from "taro-ui";
-import empty from "@/assets/image/empty.png";
+import ImageCom from "../imageCom";
 
 
 export default function NavBar(props: {
@@ -36,7 +36,7 @@ export default function NavBar(props: {
       <>
         {card.map((child, childIndex) => (
           <View className="card-wrapper" key={childIndex}>
-            <Image className="card-left" src={child.src || empty} />
+            <ImageCom src={child.src} className="card-left" />
             <View className="card-main">
               <View>
                 <View className="card-primary-text">{child.title}</View>

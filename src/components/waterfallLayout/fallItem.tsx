@@ -1,8 +1,9 @@
-import { View, Image, Text } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import { useEffect, useRef, useState } from "react";
 import { useReactChild } from "types";
 import empty from "../../assets/image/empty.png";
 import Skeleton from "../skeleton";
+import ImageCom from "../imageCom";
 
 interface defaultParams {
   title: string;
@@ -32,9 +33,6 @@ export default function FallItem(props: {
     setImgLoadStatus(false);
   }
   const [imgSrc, setImgSrc] = useState(empty);
-  function handleError() {
-    setImgSrc(empty);
-  }
 
   function defaultBuild(data: defaultParams) {
     return (
@@ -56,13 +54,14 @@ export default function FallItem(props: {
         </View>
       ) : null}
       <View style={{ visibility: imgLoadStatus ? "hidden" : "visible" }}>
-        <Image
+        {/* <Image
           className="fall-img"
           src={imgSrc}
           onLoad={handleLoad}
           onError={handleError}
           fadeIn
-        ></Image>
+        ></Image> */}
+        <ImageCom src={imgSrc} className="fall-img" onLoad={handleLoad} />
         {props.children.default
           ? defaultBuild(props.item as defaultParams)
           : null}
