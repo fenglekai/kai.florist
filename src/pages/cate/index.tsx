@@ -23,11 +23,11 @@ export default function Cate() {
 
   async function getCateData() {
     const data: { data: cateList[] } = await request(
-      "http://127.0.0.1:7001/api/web/cateList"
+      "/api/web/cateList"
     );
     const map = new Map();
     data.data.forEach((item) => {
-      item.src = "http://127.0.0.1:7001" + item.src;
+      item.src = process.env.TARO_APP_API + item.src;
       if (map.has(item.cate)) {
         const child: any[] = map.get(item.cate);
         child.push(item);

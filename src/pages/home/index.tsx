@@ -22,12 +22,12 @@ export default function Home() {
 
   const getHomeData = async () => {
     const data: { data: homeList[] } = await request(
-      "http://127.0.0.1:7001/api/web/homeList"
+      "/api/web/homeList"
     );
     const formatData = data.data.map((item) => {
       return {
         ...item,
-        src: "http://127.0.0.1:7001" + item.src,
+        src: process.env.TARO_APP_API + item.src,
       };
     });
     setList(formatData);

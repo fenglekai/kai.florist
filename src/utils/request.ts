@@ -1,6 +1,7 @@
 import axios, { Canceler } from "axios";
 
 const service = axios.create({
+  baseURL: process.env.TARO_APP_API,
   timeout: 10000,
 });
 window._axiosPromiseArr = [];
