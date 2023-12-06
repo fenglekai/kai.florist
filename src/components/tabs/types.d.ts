@@ -12,4 +12,5 @@ interface ListItem {
   description: string;
   price: string;
   src: string;
+  like_num: number;
 }

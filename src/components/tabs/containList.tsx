@@ -1,24 +1,26 @@
-import { View } from "@tarojs/components";
+import { View, Text } from "@tarojs/components";
 import { useEffect, useRef } from "react";
 import { AtIcon } from "taro-ui";
 import ImageCom from "../imageCom";
-
 
 export default function NavBar(props: {
   list: NavItem;
   current: number;
   scrollTop: number;
   nextBar: (index: number) => void;
-  getHeight: (current: number,height: number) => void;
+  getHeight: (current: number, height: number) => void;
 }) {
   const listDom = useRef<HTMLElement>();
   const navBarDom = useRef<HTMLElement>();
   useEffect(() => {
     setTimeout(() => {
       if (!navBarDom.current || !listDom.current) return;
-      props.getHeight(props.current,listDom.current.offsetTop - navBarDom.current.offsetHeight - 10)
+      props.getHeight(
+        props.current,
+        listDom.current.offsetTop - navBarDom.current.offsetHeight - 10
+      );
     }, 200);
-  },[])
+  }, []);
   useEffect(() => {
     if (!navBarDom.current || !listDom.current) return;
     const contentHeight =
@@ -39,15 +41,22 @@ export default function NavBar(props: {
             <ImageCom src={child.src} className="card-left" />
             <View className="card-main">
               <View>
-                <View className="card-primary-text">{child.title}</View>
-                <View className="card-second-text">{child.description}</View>
+                <View className="card-primary-text text-over-two">
+                  {child.title}
+                </View>
+                <View className="card-second-text text-over-two">
+                  {child.description}
+                </View>
               </View>
-              <View className="card-price card-primary-text">
-                {child.price}
+              <View className="card-price-like">
+                <Text className="card-price card-primary-text">
+                  {child.price}
+                </Text>
+                <View className="card-like">
+                  <AtIcon value="heart"></AtIcon>
+                  <Text>{child.like_num}</Text>
+                </View>
               </View>
-            </View>
-            <View className="card-right">
-              <AtIcon value="heart"></AtIcon>
             </View>
           </View>
         ))}
@@ -57,10 +66,11 @@ export default function NavBar(props: {
 
   return (
     <View className="list-item" ref={listDom}>
-      <View className="nav-bar" ref={navBarDom}>
-        {props.list.nav}
-      </View>
-      <View className="hidden" id={"nav-id" + String(props.current)}>
+      <View
+        className="nav-bar"
+        ref={navBarDom}
+        id={"nav-id" + String(props.current)}
+      >
         {props.list.nav}
       </View>
       {cardBuild(props.list.children)}
