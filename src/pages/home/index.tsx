@@ -1,30 +1,28 @@
 import { View, Input, ScrollView, Text } from "@tarojs/components";
-import { useLoad } from "@tarojs/taro";
 import { AtIcon } from "taro-ui";
 import { useState } from "react";
+import { useLoad } from "@tarojs/taro";
 import WaterfallLayout from "@/components/waterfallLayout";
+import request from "@/utils/request";
 import "./index.less";
 
 export default function Home() {
-  useLoad(() => {});
+  useLoad(() => {
+    getHomeData();
+  });
 
-  const list = Array(20)
-    .fill(1)
-    .map(() => {
-      const random = Math.floor(Math.random() * 10) % 2;
-      const data = {
-        src: "",
-        title: "这是标题",
-        description: "这是一段描述",
-        price: "29",
-      };
-      if (random) {
-        // data.src = `https://picsum.photos/${1280}/${720}?random=${1}`;
-      } else {
-        // data.src = `https://picsum.photos/${720}/${720}?random=${2}`;
+  const getHomeData = async () => {
+    const data: any = await request("http://127.0.0.1:7001/api/web/homeList");
+    const formatData: any[] = data.data.map(item => {
+      return {
+        ...item,
+        src: 'http://127.0.0.1:7001' + item.src
       }
-      return data;
     });
+    setList(formatData);
+  };
+
+  const [list, setList] = useState<any[]>([]);
 
   const [fixedSearch, setFixedSearch] = useState(false);
 
@@ -71,7 +69,9 @@ export default function Home() {
             </View>
           </View>
         </View>
-        <WaterfallLayout className="home-waterfall" list={list}>{{ default: true }}</WaterfallLayout>
+        <WaterfallLayout className="home-waterfall" list={list}>
+          {{ default: true }}
+        </WaterfallLayout>
       </ScrollView>
     </View>
   );
