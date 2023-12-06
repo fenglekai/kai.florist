@@ -3,55 +3,48 @@ import { useLoad } from "@tarojs/taro";
 import { AtIcon } from "taro-ui";
 import { useState } from "react";
 import Tabs from "@/components/tabs";
+import request from "@/utils/request";
 import "./index.less";
+
+interface cateList {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  like_num: number;
+  cate: string;
+  src: string;
+}
 
 export default function Cate() {
   useLoad(() => {
-    for (let i = 0; i < 10; i++) {
-      tabList[0].children.push({
-        title: "商品名称",
-        description: "商品描述",
-        price: "19",
-        src: "",
-      });
-      tabList[1].children.push({
-        title: "商品名称",
-        description: "商品描述",
-        price: "19",
-        src: "",
-      });
-      tabList[2].children.push({
-        title: "商品名称",
-        description: "商品描述",
-        price: "19",
-        src: "",
-      });
-    }
-    for (let i = 0; i < 2; i++) {
-      tabList[3].children.push({
-        title: "商品名称",
-        description: "商品描述",
-        price: "19",
-        src: "",
-      });
-      tabList[4].children.push({
-        title: "商品名称",
-        description: "商品描述",
-        price: "19",
-        src: "",
-      });
-    }
-    setTabList(tabList);
+    getCateData();
   });
+
+  async function getCateData() {
+    const data: { data: cateList[] } = await request(
+      "http://127.0.0.1:7001/api/web/cateList"
+    );
+    const map = new Map();
+    data.data.forEach((item) => {
+      item.src = "http://127.0.0.1:7001" + item.src;
+      if (map.has(item.cate)) {
+        const child: any[] = map.get(item.cate);
+        child.push(item);
+      } else {
+        map.set(item.cate, [item]);
+      }
+    });
+    map.forEach((item, key) => {
+      setTabList([...tabList, { nav: key, children: item }]);
+    });
+
+    // setTabList()
+  }
 
   const [tab, setTab] = useState(0);
 
-  const [tabList, setTabList] = useState<any>([
-    { nav: "标签页1", children: [] },
-    { nav: "标签页2", children: [] },
-    { nav: "标签页3", children: [] },
-    { nav: "标签页4", children: [] },
-    { nav: "标签页5", children: [] },
+  const [tabList, setTabList] = useState<{ nav: string; children: any[] }[]>([
   ]);
   function handleTabClick(tabIndex: any) {
     setTab(tabIndex);
