@@ -40,6 +40,7 @@
     "@tarojs/components": "3.6.19",
     "@tarojs/helper": "3.6.19",
     "@tarojs/plugin-framework-react": "3.6.19",
+    "@tarojs/plugin-http": "^3.6.20",
     "@tarojs/plugin-platform-alipay": "3.6.19",
     "@tarojs/plugin-platform-h5": "3.6.19",
     "@tarojs/plugin-platform-jd": "3.6.19",
@@ -51,6 +52,7 @@
     "@tarojs/runtime": "3.6.19",
     "@tarojs/shared": "3.6.19",
     "@tarojs/taro": "3.6.19",
+    "axios": "^1.6.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "taro-ui": "^3.1.1"
