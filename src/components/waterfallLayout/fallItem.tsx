@@ -1,7 +1,8 @@
 import { View, Image, Text } from "@tarojs/components";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReactChild } from "types";
 import empty from "../../assets/image/empty.png";
+import Skeleton from "../skeleton";
 
 interface defaultParams {
   title: string;
@@ -14,15 +15,25 @@ export default function FallItem(props: {
   item: { src: string; title?: string; description?: string; price?: string };
   children: { default: useReactChild };
 }) {
+  useEffect(() => {
+    if (imgSrc != props.item.src) {
+      
+    }
+    setImgSrc(props.item.src);
+  }, [props.item.src]);
+
   const itemsRef = useRef<HTMLElement>();
+  const [imgLoadStatus, setImgLoadStatus] = useState(true);
   function handleLoad() {
     if (!itemsRef.current) return;
     itemsRef.current.style.gridRowEnd = `span ${
       itemsRef.current.clientHeight - 1
     }`;
+    setImgLoadStatus(false);
   }
+  const [imgSrc, setImgSrc] = useState(empty);
   function handleError() {
-    props.item.src = empty
+    setImgSrc(empty);
   }
 
   function defaultBuild(data: defaultParams) {
@@ -39,14 +50,23 @@ export default function FallItem(props: {
 
   return (
     <View ref={itemsRef} className="fall-item" key={props.itemKey}>
-      <Image
-        className="fall-img"
-        src={props.item.src || empty}
-        onLoad={handleLoad}
-        onError={handleError}
-        fadeIn
-      ></Image>
-      {props.children.default ? defaultBuild((props.item) as defaultParams) : null}
+      {imgLoadStatus ? (
+        <View className="skeleton-cell">
+          <Skeleton />
+        </View>
+      ) : null}
+      <View style={{ visibility: imgLoadStatus ? "hidden" : "visible" }}>
+        <Image
+          className="fall-img"
+          src={imgSrc}
+          onLoad={handleLoad}
+          onError={handleError}
+          fadeIn
+        ></Image>
+        {props.children.default
+          ? defaultBuild(props.item as defaultParams)
+          : null}
+      </View>
     </View>
   );
 }
