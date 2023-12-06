@@ -6,18 +6,29 @@ import WaterfallLayout from "@/components/waterfallLayout";
 import request from "@/utils/request";
 import "./index.less";
 
+interface homeList {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  like_num: number;
+  src: string;
+}
+
 export default function Home() {
   useLoad(() => {
     getHomeData();
   });
 
   const getHomeData = async () => {
-    const data: any = await request("http://127.0.0.1:7001/api/web/homeList");
-    const formatData: any[] = data.data.map(item => {
+    const data: { data: homeList[] } = await request(
+      "http://127.0.0.1:7001/api/web/homeList"
+    );
+    const formatData = data.data.map((item) => {
       return {
         ...item,
-        src: 'http://127.0.0.1:7001' + item.src
-      }
+        src: "http://127.0.0.1:7001" + item.src,
+      };
     });
     setList(formatData);
   };
