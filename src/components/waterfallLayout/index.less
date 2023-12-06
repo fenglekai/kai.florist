@@ -1,3 +1,4 @@
+@import "../../app.less";
 .waterfall-container {
   display: grid;
   column-gap: 20px;
@@ -21,28 +22,32 @@
   }
 
   .fall-info {
-    display: flex;
-    padding: 12px 24px;
-    .info-left {
-      flex: 1;
-      .fall-title {
-        font-size: 32px;
-        display: block;
-      }
-      .fall-description {
-        font-size: 20px;
-        display: block;
-        color: gray;
-      }
+    padding: 0 24px 12px 24px;
+    .fall-title {
+      width: 100%;
+      font-size: 28px;
     }
-    .info-right {
-      text-align: end;
-      font-size: 32px;
-      color: gray;
-      &::before {
-        content: '￥';
-        font-size: 24px;
+    .info-box {
+      display: flex;
+      align-items: center;
+      .info-left {
+        flex: 1;
+        color: @text-second-color;
+        font-size: 46px;
+        font-weight: 600;
+        &::before {
+          content: "￥";
+          font-size: 24px;
+        }
       }
+      .info-right {
+        font-size: 20px;
+        color: @text-second-color;
+        * + * {
+          margin-left: 12px;
+        }
+      }
+
     }
   }
 }

@@ -4,21 +4,28 @@ import { useReactChild } from "types";
 import empty from "../../assets/image/empty.png";
 import Skeleton from "../skeleton";
 import ImageCom from "../imageCom";
+import { AtIcon } from "taro-ui";
 
 interface defaultParams {
   title: string;
   description: string;
   price: string;
+  like_num: number;
 }
 
 export default function FallItem(props: {
   itemKey: string | number | undefined;
-  item: { src: string; title?: string; description?: string; price?: string };
+  item: {
+    src: string;
+    title?: string;
+    description?: string;
+    price?: string;
+    like_num: number;
+  };
   children: { default: useReactChild };
 }) {
   useEffect(() => {
     if (imgSrc != props.item.src) {
-      
     }
     setImgSrc(props.item.src);
   }, [props.item.src]);
@@ -37,11 +44,11 @@ export default function FallItem(props: {
   function defaultBuild(data: defaultParams) {
     return (
       <View className="fall-info">
-        <View className="info-left">
-          <Text className="fall-title">{data.title}</Text>
-          <Text className="fall-description">{data.description}</Text>
+        <Text className="fall-title text-over-two">{data.title}</Text>
+        <View className="info-box">
+          <View className="info-left">{data.price}</View>
+          <View className="info-right"><AtIcon value="heart"></AtIcon><Text>{data.like_num}</Text></View>
         </View>
-        <View className="info-right">{data.price}</View>
       </View>
     );
   }
@@ -54,13 +61,6 @@ export default function FallItem(props: {
         </View>
       ) : null}
       <View style={{ visibility: imgLoadStatus ? "hidden" : "visible" }}>
-        {/* <Image
-          className="fall-img"
-          src={imgSrc}
-          onLoad={handleLoad}
-          onError={handleError}
-          fadeIn
-        ></Image> */}
         <ImageCom src={imgSrc} className="fall-img" onLoad={handleLoad} />
         {props.children.default
           ? defaultBuild(props.item as defaultParams)
