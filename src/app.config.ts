@@ -4,10 +4,26 @@ export default defineAppConfig({
     'pages/cate/index',
     'pages/user/index'
   ],
+  tabBar: {
+    list: [
+      {
+        pagePath: 'pages/home/index',
+        text: '首页',
+      },
+      {
+        pagePath: 'pages/cate/index',
+        text: '分类',
+      },
+      {
+        pagePath: 'pages/user/index',
+        text: '我的',
+      },
+    ],
+  },
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
-    navigationBarTitleText: 'WeChat',
+    navigationBarTitleText: 'Florist',
     navigationBarTextStyle: 'black'
   }
 })
