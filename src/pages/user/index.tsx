@@ -4,8 +4,8 @@ import { AtActivityIndicator, AtAvatar, AtIcon } from "taro-ui";
 import { useEffect, useState } from "react";
 import WaterfallLayout from "@/components/waterfallLayout";
 import request from "@/utils/request";
-import "./index.less";
 import { debounce } from "@/utils/common";
+import "./index.less";
 
 export default function User() {
   const [likeList, setLickList] = useState<{ src: string }[]>([]);
@@ -14,19 +14,18 @@ export default function User() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const data = await request(
-        `https://picsum.photos/v2/list?page=${page}&limit=10`
-      );
-
-      setLickList(() => {
-        const formatData = data.map((item: { download_url: string }) => {
-          return {
-            src: item.download_url,
-          };
-        });
-        const res = likeList.concat(formatData);
-        return res;
-      });
+      // const data: any[] = await request(
+      //   `https://picsum.photos/v2/list?page=${page}&limit=10`
+      // );
+      // setLickList(() => {
+      //   const formatData = data.map((item: { download_url: string }) => {
+      //     return {
+      //       src: item.download_url,
+      //     };
+      //   });
+      //   const res = likeList.concat(formatData);
+      //   return res;
+      // });
     } catch (error) {
       console.log(error);
     }
@@ -66,6 +65,7 @@ export default function User() {
         <AtActivityIndicator
           isOpened={loading}
           content="加载中..."
+          mode="center"
         ></AtActivityIndicator>
       </ScrollView>
     );
