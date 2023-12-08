@@ -1,19 +1,24 @@
 import { View } from "@tarojs/components";
-import Taro, { useDidShow } from "@tarojs/taro";
+import {
+  useDidShow,
+  setStorageSync,
+  getStorageSync,
+  switchTab,
+} from "@tarojs/taro";
 import { useState } from "react";
 import { AtTabBar } from "taro-ui";
 
 export default function TabBar() {
   useDidShow(() => {
     try {
-      const index = Taro.getStorageSync('page-index')
+      const index = getStorageSync("page-index");
       if (!index) {
-        Taro.setStorageSync('page-index', 0)
+        setStorageSync("page-index", 0);
       } else {
-        setCurrent(index)
+        setCurrent(index);
       }
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
   });
 
@@ -22,8 +27,8 @@ export default function TabBar() {
   const dict = ["home", "cate", "user"];
   function handleClick(tab: number) {
     setCurrent(tab);
-    Taro.setStorageSync('page-index', tab)
-    Taro.switchTab({
+    setStorageSync("page-index", tab);
+    switchTab({
       url: `/pages/${dict[tab]}/index`,
     });
   }
