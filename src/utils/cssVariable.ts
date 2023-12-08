@@ -8,7 +8,7 @@ export function setPrefix(value: string) {
 
 const theme = {
   'primary-color': "#6190e8",
-  'second-color': "#7393d0",
+  'second-color': "#acc1eb",
   'text-color': "#303133",
   'text-second-color': "#909399",
   'text-dark-color': "#ffffff",
