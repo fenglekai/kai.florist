@@ -7,9 +7,8 @@ import TabBar from "./components/tabBar";
 import { setRootVariable } from "./utils/cssVariable";
 
 function App({ children }: PropsWithChildren<any>) {
-  const test = '#fff'
   useLaunch(() => {
-    setRootVariable()
+    setRootVariable();
   });
 
   // children 是将要会渲染的页面
