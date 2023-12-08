@@ -4,10 +4,12 @@ import "taro-ui/dist/style/index.scss";
 import { View } from "@tarojs/components";
 import "./app.less";
 import TabBar from "./components/tabBar";
+import { setRootVariable } from "./utils/cssVariable";
 
 function App({ children }: PropsWithChildren<any>) {
+  const test = '#fff'
   useLaunch(() => {
-    // console.log('App launched.')
+    setRootVariable()
   });
 
   // children 是将要会渲染的页面
