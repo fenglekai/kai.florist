@@ -53,16 +53,6 @@ export default function Cate() {
 
   return (
     <View className="cate">
-      <View className="top-search">
-        <View className="search-wrapper">
-          <View className="search-left">
-            <AtIcon value="search" size="30"></AtIcon>
-          </View>
-          <View className="search-right">
-            <Input type="text" className="input" />
-          </View>
-        </View>
-      </View>
       <Tabs currentTab={tab} tabList={tabList} tabClick={handleTabClick} />
     </View>
   );
