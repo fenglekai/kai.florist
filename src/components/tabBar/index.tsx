@@ -1,11 +1,12 @@
 import { View } from "@tarojs/components";
 import {
-  useDidShow,
   setStorageSync,
   getStorageSync,
   switchTab,
+  useDidShow,
 } from "@tarojs/taro";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { AtTabBar } from "taro-ui";
 
 export default function TabBar() {
@@ -22,6 +23,10 @@ export default function TabBar() {
     }
   });
 
+  const navBar = useSelector(
+    (state: { page: { navBar: boolean } }) => state.page.navBar
+  );
+
   const [current, setCurrent] = useState(0);
 
   const dict = ["home", "cate", "user"];
@@ -34,7 +39,7 @@ export default function TabBar() {
   }
 
   return (
-    <View>
+    <View style={{ visibility: navBar ? "visible" : "hidden" }}>
       <AtTabBar
         fixed
         tabList={[

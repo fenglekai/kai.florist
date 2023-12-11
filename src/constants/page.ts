@@ -1,0 +1,2 @@
+export const SHOW_NAVBAR = "SHOW_NAVBAR"
+export const DISABLE_NAVBAR = "DISABLE_NAVBAR"

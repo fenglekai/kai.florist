@@ -1,13 +1,18 @@
 import { Input, PageContainer, View } from "@tarojs/components";
-import { useLoad } from "@tarojs/taro";
+import { useLoad, useUnload } from "@tarojs/taro";
 import { AtIcon } from "taro-ui";
 import { useReactChild } from "types";
+import { useDispatch } from "react-redux";
 import './index.less'
 
 export default function Search() {
+  const dispatch = useDispatch()
   useLoad(() => {
-    console.log(process.env.TARO_ENV);
+    dispatch({ type: 'DISABLE_NAVBAR' })
   });
+  useUnload(() => {
+    dispatch({ type: 'SHOW_NAVBAR' })
+  })
 
   function weappBuild(slot: useReactChild) {
     return <PageContainer position="right" className="top-search">{slot}</PageContainer>;
