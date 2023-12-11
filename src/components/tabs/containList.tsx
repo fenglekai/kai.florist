@@ -1,7 +1,6 @@
-import { View, Text } from "@tarojs/components";
+import { View } from "@tarojs/components";
 import { useEffect, useRef } from "react";
-import { AtIcon } from "taro-ui";
-import ImageCom from "../imageCom";
+import CardInfo from "../cardInfo";
 
 export default function NavBar(props: {
   list: NavItem;
@@ -37,28 +36,7 @@ export default function NavBar(props: {
     return (
       <>
         {card.map((child, childIndex) => (
-          <View className="card-wrapper" key={childIndex}>
-            <ImageCom src={child.src} className="card-left" />
-            <View className="card-main">
-              <View>
-                <View className="card-primary-text text-over-two">
-                  {child.title}
-                </View>
-                <View className="card-second-text text-over-two">
-                  {child.description}
-                </View>
-              </View>
-              <View className="card-price-like">
-                <Text className="card-price card-primary-text">
-                  {child.price}
-                </Text>
-                <View className="card-like">
-                  <AtIcon value="heart"></AtIcon>
-                  <Text>{child.like_num}</Text>
-                </View>
-              </View>
-            </View>
-          </View>
+          <CardInfo child={child} key={childIndex} />
         ))}
       </>
     );

@@ -10,7 +10,7 @@ interface NavItem {
 interface ListItem {
   title: string;
   description: string;
-  price: string;
+  price: number;
   src: string;
   like_num: number;
 }
