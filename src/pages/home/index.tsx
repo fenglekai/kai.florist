@@ -1,10 +1,9 @@
-import { View, Input, ScrollView, Text } from "@tarojs/components";
+import { View, ScrollView, Text } from "@tarojs/components";
 import { AtIcon } from "taro-ui";
-import { SetStateAction, useState } from "react";
+import { useState } from "react";
 import { useLoad, navigateTo } from "@tarojs/taro";
 import WaterfallLayout from "@/components/waterfallLayout";
 import request from "@/utils/request";
-import { debounce } from "@/utils/common";
 import "./index.less";
 
 interface homeList {
@@ -44,14 +43,6 @@ export default function Home() {
     }
   };
 
-  const [searchInput, setSearchInput] = useState<string>();
-
-  function onInput(e: {
-    detail: { value: SetStateAction<string | undefined> };
-  }) {
-    setSearchInput(e.detail.value);
-  }
-
   function handleSearch() {
     navigateTo({
       url: `/pages/search/index`,
@@ -80,14 +71,7 @@ export default function Home() {
           onClick={handleSearch}
         >
           <View className="search-content">
-            <Input
-              type="text"
-              className="input"
-              disabled
-              maxlength={20}
-              value={searchInput}
-              onInput={debounce(onInput, 1000)}
-            />
+            <Text className="text-over-one placeholder">搜索</Text>
           </View>
           <View className="search-icon">
             <AtIcon value="search" size="30"></AtIcon>
