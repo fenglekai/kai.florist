@@ -7,7 +7,7 @@ import request from "@/utils/request";
 import { getRootVariable } from "@/utils/cssVariable";
 import "./index.less";
 
-interface homeList {
+export interface homeList {
   id: number;
   title: string;
   description: string;
