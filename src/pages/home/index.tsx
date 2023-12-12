@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useLoad, navigateTo } from "@tarojs/taro";
 import WaterfallLayout from "@/components/waterfallLayout";
 import request from "@/utils/request";
+import { getRootVariable } from "@/utils/cssVariable";
 import "./index.less";
 
 interface homeList {
@@ -95,7 +96,9 @@ export default function Home() {
         <View
           className="top-search sticky-search"
           style={{
-            backgroundColor: toTop ? "var(--fs-primary-color)" : undefined,
+            backgroundColor: toTop
+              ? `var(${getRootVariable("primary-color")})`
+              : undefined,
           }}
         >
           {searchBuild()}

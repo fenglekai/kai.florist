@@ -35,8 +35,18 @@ export function setRootVariable() {
   const root = document.documentElement;
   for (const key in variable) {
     if (Object.prototype.hasOwnProperty.call(variable, key)) {
-      const hyphenatedStr = prefix + '-' + setHyphenatedStr(key);
+      const hyphenatedStr = getPrefix() + '-' + setHyphenatedStr(key);
       root.style.setProperty(hyphenatedStr, variable[key]);
     }
+  }
+}
+
+export function getRootVariable(key: string) {
+  const keys = Object.keys(theme);
+  if (keys.includes(key)) {
+    const joinStr = getPrefix() + '-' + setHyphenatedStr(key)
+    return joinStr;
+  } else {
+    throw new Error(`Key ${key} is not present in the theme.`);
   }
 }
