@@ -13,18 +13,19 @@ import { useDispatch } from "react-redux";
 import CardInfo from "@/components/cardInfo";
 import EmptyCom from "@/components/emptyCom";
 import request from "@/utils/request";
+import { disableNavBar, showNavBar } from "@/actions/page";
 import "./index.less";
 import { homeList } from "../home";
 
 export default function Search() {
   const dispatch = useDispatch();
   useLoad(() => {
-    dispatch({ type: "DISABLE_NAVBAR" });
+    dispatch(disableNavBar());
   });
 
   function handleBackClick() {
     navigateBack();
-    dispatch({ type: "SHOW_NAVBAR" });
+    dispatch(showNavBar());
   }
 
   const [searchInput, setSearchInput] = useState<string>("");
