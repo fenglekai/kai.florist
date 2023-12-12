@@ -6,12 +6,15 @@ import {
   ScrollView,
 } from "@tarojs/components";
 import { useLoad, navigateBack } from "@tarojs/taro";
-import { AtButton, AtIcon } from "taro-ui";
+import { AtButton, AtIcon, AtToast } from "taro-ui";
 import { useReactChild } from "types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import CardInfo from "@/components/cardInfo";
+import EmptyCom from "@/components/emptyCom";
+import request from "@/utils/request";
 import "./index.less";
+import { homeList } from "../home";
 
 export default function Search() {
   const dispatch = useDispatch();
@@ -24,7 +27,8 @@ export default function Search() {
     dispatch({ type: "SHOW_NAVBAR" });
   }
 
-  const [searchInput, setSearchInput] = useState<string>();
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [showToast, setShowToast] = useState(false);
 
   function onInput(e: { detail: { value: string } }) {
     setSearchInput(e.detail.value);
@@ -33,10 +37,29 @@ export default function Search() {
     }
   }
 
-  function handleSearch() {
-    console.log(searchInput);
+  function handleSearch(keyword: string = searchInput) {
+    if (!keyword) return setShowToast(true);
+    getHomeData(keyword);
     setShowRecommend(false);
   }
+
+  const [loading, setLoading] = useState(false);
+  const getHomeData = async (keyword: string) => {
+    setLoading(true);
+    const data: { data: homeList[] } = await request("/api/web/homeList", {
+      params: { keyword },
+    });
+    const formatData = data.data.map((item) => {
+      return {
+        ...item,
+        src: process.env.TARO_APP_API + item.src,
+      };
+    });
+    setList(formatData);
+    setLoading(false);
+  };
+
+  const [list, setList] = useState<homeList[]>([]);
 
   const [showRecommend, setShowRecommend] = useState(true);
   const hotSearch = [
@@ -46,13 +69,13 @@ export default function Search() {
     "郁金香",
     "玫瑰花",
     "玉兰花",
-    "玉兰花",
-    "玉兰花",
-    "玉兰花",
+    "玉兰花1",
+    "玉兰花2",
+    "玉兰花3",
   ];
   function handleHotItem(keyword: string) {
     setSearchInput(keyword);
-    handleSearch();
+    handleSearch(keyword);
   }
 
   function inputWithButtonBuild() {
@@ -68,6 +91,7 @@ export default function Search() {
             maxlength={20}
             value={searchInput}
             onInput={onInput}
+            onFocus={() => setShowToast(false)}
           />
         </View>
         <AtButton
@@ -75,7 +99,8 @@ export default function Search() {
           type="primary"
           size="small"
           className="search-btn"
-          onClick={handleSearch}
+          onClick={() => handleSearch()}
+          loading={loading}
         >
           搜索
         </AtButton>
@@ -138,17 +163,19 @@ export default function Search() {
         </View>
       ) : (
         <ScrollView>
-          <CardInfo
-            child={{
-              src: "string",
-              title: "string",
-              description: "string",
-              price: 28,
-              like_num: 32,
-            }}
-          />
+          {list.length > 0 ? (
+            list.map((item) => <CardInfo child={item} key={item.id} />)
+          ) : (
+            <EmptyCom />
+          )}
         </ScrollView>
       )}
+
+      <AtToast
+        isOpened={showToast}
+        text="请输入关键词"
+        onClose={() => setShowToast(false)}
+      ></AtToast>
     </View>
   );
 }
