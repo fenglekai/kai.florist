@@ -44,7 +44,7 @@ export default function TabBar() {
         fixed
         tabList={[
           { title: "首页", iconType: "home" },
-          { title: "分类", iconType: "shopping-bag-2" },
+          { title: "分类", iconType: "list" },
           { title: "我的", iconType: "user" },
         ]}
         onClick={handleClick.bind(this)}
