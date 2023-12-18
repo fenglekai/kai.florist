@@ -23,6 +23,7 @@ export default function FallItem(props: {
     like_num: number;
   };
   children: { default: useReactChild };
+  onClick?: () => void
 }) {
   useEffect(() => {
     if (imgSrc != props.item.src) {
@@ -57,7 +58,7 @@ export default function FallItem(props: {
   }
 
   return (
-    <View ref={itemsRef} className="fall-item" key={props.itemKey}>
+    <View ref={itemsRef} className="fall-item" key={props.itemKey} onClick={props.onClick}>
       {imgLoadStatus ? (
         <View className="skeleton-cell">
           <Skeleton />
