@@ -47,7 +47,10 @@ export default function FallItem(props: {
         <Text className="fall-title text-over-two">{data.title}</Text>
         <View className="info-box">
           <View className="info-left">{data.price}</View>
-          <View className="info-right"><AtIcon value="heart"></AtIcon><Text>{data.like_num}</Text></View>
+          <View className="info-right">
+            <AtIcon value="heart"></AtIcon>
+            <Text>{data.like_num}</Text>
+          </View>
         </View>
       </View>
     );
@@ -61,7 +64,9 @@ export default function FallItem(props: {
         </View>
       ) : null}
       <View style={{ visibility: imgLoadStatus ? "hidden" : "visible" }}>
-        <ImageCom src={imgSrc} className="fall-img" onLoad={handleLoad} />
+        <View className="fall-img">
+          <ImageCom src={imgSrc} onLoad={handleLoad} />
+        </View>
         {props.children.default
           ? defaultBuild(props.item as defaultParams)
           : null}
