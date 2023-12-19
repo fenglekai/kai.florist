@@ -85,6 +85,12 @@ export default function Home() {
     );
   }
 
+  function handleClick(item: any, _key: number) {
+    navigateTo({
+      url: `/pages/productDetail/index?id=${item.id}`,
+    });
+  }
+
   return (
     <View className="home">
       <ScrollView
@@ -103,7 +109,11 @@ export default function Home() {
         >
           {searchBuild()}
         </View>
-        <WaterfallLayout className="home-waterfall" list={list}>
+        <WaterfallLayout
+          className="home-waterfall"
+          list={list}
+          onClick={handleClick}
+        >
           {{ default: true }}
         </WaterfallLayout>
       </ScrollView>

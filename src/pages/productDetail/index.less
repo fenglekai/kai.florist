@@ -1,0 +1,72 @@
+@import "@/app.less";
+@box-bg-color: #24202085;
+@border-color: #ffffff;
+@text-color: #ffffff;
+.detail-wrapper {
+  min-height: 100vh;
+}
+.box-bg {
+  background-color: @box-bg-color;
+  padding: 3px 16px;
+  border: 1px solid @border-color;
+  color: @text-color;
+  border-radius: 40px;
+}
+.back-btn {
+  display: inline-block;
+  font-size: 32px;
+  padding: 6px 16px;
+  border-radius: 50%;
+  z-index: 2023;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+}
+.product-img {
+  position: relative;
+  .swiper-view {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .img {
+      height: auto;
+      max-height: 100%;
+    }
+  }
+  .swiper-tip {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2023;
+    font-size: 32px;
+    border-radius: 40px;
+    padding: 3px 16px;
+  }
+}
+.detail-info {
+  font-size: 32px;
+  padding: 0 24px;
+  .title {
+    font-size: 46px;
+  }
+  .description {
+    color: @text-second-color;
+  }
+  .price {
+    font-size: 46px;
+    margin-top: 24px;
+    &::before {
+      content: "￥";
+      font-size: 32px;
+    }
+  }
+  .like {
+    position: absolute;
+    bottom: 24px;
+    width: calc(100% - 48px);
+    .space {
+      margin-left: 12px;
+    }
+  }
+}

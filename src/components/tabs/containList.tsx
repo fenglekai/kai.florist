@@ -8,6 +8,7 @@ export default function NavBar(props: {
   scrollTop: number;
   nextBar: (index: number) => void;
   getHeight: (current: number, height: number) => void;
+  cardClick?: (item: any, index: number) => void;
 }) {
   const listDom = useRef<HTMLElement>();
   const navBarDom = useRef<HTMLElement>();
@@ -36,10 +37,20 @@ export default function NavBar(props: {
     return (
       <>
         {card.map((child, childIndex) => (
-          <CardInfo child={child} key={childIndex} />
+          <CardInfo
+            child={child}
+            key={childIndex}
+            onClick={() => cardClick(child, childIndex)}
+          />
         ))}
       </>
     );
+  }
+
+  function cardClick(item: any, index: number) {
+    if (props.cardClick) {
+      props.cardClick(item, index);
+    }
   }
 
   return (

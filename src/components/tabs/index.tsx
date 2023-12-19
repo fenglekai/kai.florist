@@ -34,7 +34,7 @@ export default function Tabs(props: PropsParams) {
   }
   function handleNavClick(key: number) {
     props.tabClick(key);
-    setScrollTop(anchor[key])
+    setScrollTop(anchor[key]);
   }
 
   const [scrollTop, setScrollTop] = useState(0);
@@ -46,6 +46,12 @@ export default function Tabs(props: PropsParams) {
   function setNavListHeight(current: number, height: number) {
     anchor[current] = height;
     setAnchor(anchor);
+  }
+
+  function cardClick(item: any, index: number) {
+    if (props.cardClick) {
+      props.cardClick(item, index);
+    }
   }
 
   return (
@@ -66,6 +72,7 @@ export default function Tabs(props: PropsParams) {
             scrollTop={scrollTop}
             nextBar={(bar) => setTab(bar)}
             getHeight={setNavListHeight}
+            cardClick={cardClick}
             key={index}
           />
         ))}

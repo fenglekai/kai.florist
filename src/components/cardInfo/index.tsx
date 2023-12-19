@@ -11,10 +11,11 @@ export default function CardInfo(props: {
     price: number;
     like_num: number;
   };
+  onClick?: () => void;
 }) {
   const { child } = props;
   return (
-    <View className="card-wrapper">
+    <View className="card-wrapper" onClick={props.onClick}>
       <ImageCom src={child.src} mode="aspectFill" className="card-left" />
       <View className="card-main">
         <View>
