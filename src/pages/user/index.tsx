@@ -1,57 +1,158 @@
 import { ScrollView, View, Text } from "@tarojs/components";
 import Card from "@/components/card";
-import { AtActivityIndicator, AtAvatar, AtIcon } from "taro-ui";
+import {
+  AtActivityIndicator,
+  AtAvatar,
+  AtIcon,
+  AtList,
+  AtListItem,
+} from "taro-ui";
 import { useEffect, useState } from "react";
 import WaterfallLayout from "@/components/waterfallLayout";
 import request from "@/utils/request";
 import { debounce } from "@/utils/common";
+import { getStorageSync, setStorageSync, navigateTo, pxTransform } from "@tarojs/taro";
 import "./index.less";
+
+interface User {
+  username: string;
+  authorization: string;
+}
 
 export default function User() {
   const [likeList, setLickList] = useState<{ src: string }[]>([]);
   const [page, setPage] = useState(6);
   const [loading, setLoading] = useState(false);
-  const fetchData = async () => {
+  async function fetchData() {
     setLoading(true);
     try {
-      // const data: any[] = await request(
-      //   `https://picsum.photos/v2/list?page=${page}&limit=10`
-      // );
-      // setLickList(() => {
-      //   const formatData = data.map((item: { download_url: string }) => {
-      //     return {
-      //       src: item.download_url,
-      //     };
-      //   });
-      //   const res = likeList.concat(formatData);
-      //   return res;
-      // });
+      const data: any[] = await request(`/api/goods/list`);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
     setLoading(false);
-  };
+  }
   function handleLikeBottom() {
     if (!loading) {
-      setPage(page + 1);
+      // setPage(page + 1);
     }
   }
   useEffect(() => {
-    fetchData();
+    // fetchData();
   }, [page]);
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  const [user, setUser] = useState<User>({
+    username: "未登录",
+    authorization: "",
+  });
+  async function fetchUser() {
+    const userStore = getStorageSync("user");
+    if (!userStore) return;
+    if (
+      userStore.username === user.username &&
+      userStore.authorization === user.authorization
+    ) {
+      const valid = await verify(userStore.authorization);
+      if (!valid) {
+        setUser({
+          username: "未登录",
+          authorization: "",
+        });
+      }
+    } else {
+      setStorageSync("user", undefined);
+      setUser({
+        username: "未登录",
+        authorization: "",
+      });
+    }
+  }
+  async function login() {
+    try {
+      const data = await request(`/api/user/login`, {
+        method: "post",
+        data: {
+          username: "test123",
+          password: "123456",
+        },
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async function verify(code: string) {
+    try {
+      const data = await request(`/api/user/verify`, {
+        params: {
+          code,
+        },
+      });
+      return data.data.success || false;
+    } catch (error) {
+      console.log(error);
+    }
+    return false;
+  }
+
+  function intoSetting() {
+    navigateTo({ url: "/pages/settings/index" });
+  }
 
   function infoContentBuild() {
     return (
-      <View className="content">
-        <AtAvatar circle text="我"></AtAvatar>
-        <Text className="name">我的名称</Text>
-        <AtIcon value="edit" className="i-edit"></AtIcon>
+      <View className="user-info">
+        <AtAvatar circle text={user.username}></AtAvatar>
+        <Text className="name">{user.username}</Text>
+      </View>
+    );
+  }
+
+  function settingTitleBuild() {
+    return <Text>更多设置</Text>;
+  }
+
+  function settingButtonBuild() {
+    const btnProperty = [{ type: "settings", name: "设置" }];
+    return (
+      <>
+        {btnProperty.map((item, index) => (
+          <View className="button-group" key={index}>
+            <AtIcon value={item.type} className="icon"></AtIcon>
+            <Text className="name">{item.name}</Text>
+          </View>
+        ))}
+      </>
+    );
+  }
+
+  function settingContentBuild() {
+    // return <View className="content">{settingButtonBuild()}</View>;
+    return (
+      <View
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+        onClick={intoSetting}
+      >
+        <Text>更多设置</Text>
+        <View>
+          <Text style={{fontSize: pxTransform(24), color: 'var(--fs-text-second-color)'}}>登录</Text>
+          <AtIcon value="chevron-right"></AtIcon>
+        </View>
       </View>
     );
   }
 
   function likeTitleBuild() {
-    return <Text className="title">关注列表</Text>;
+    return <Text>关注列表</Text>;
   }
 
   function likeContentBuild() {
@@ -72,20 +173,23 @@ export default function User() {
   }
 
   return (
-    <ScrollView className="user" scrollY>
-      <View className="top-background"></View>
-      <View className="container">
-        <Card className="user-info">
-          {{
-            content: infoContentBuild(),
-          }}
-        </Card>
-        <Card className="user-like">
-          {{
-            title: likeTitleBuild(),
-            content: likeContentBuild(),
-          }}
-        </Card>
+    <ScrollView scrollY>
+      <View className="user">
+        <View className="top-background"></View>
+        <View className="container">
+          {infoContentBuild()}
+          <Card className="setting">
+            {{
+              content: settingContentBuild(),
+            }}
+          </Card>
+          <Card className="user-like">
+            {{
+              title: likeTitleBuild(),
+              content: likeContentBuild(),
+            }}
+          </Card>
+        </View>
       </View>
     </ScrollView>
   );

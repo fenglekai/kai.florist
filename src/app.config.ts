@@ -5,6 +5,7 @@ export default defineAppConfig({
     'pages/user/index',
     'pages/search/index',
     'pages/productDetail/index',
+    'pages/settings/index',
   ],
   tabBar: {
     list: [
