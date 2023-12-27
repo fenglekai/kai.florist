@@ -2,7 +2,7 @@ import { disableNavBar, showNavBar } from "@/actions/page";
 import ImageCom from "@/components/imageCom";
 import request from "@/utils/request";
 import { Swiper, SwiperItem, View, Text } from "@tarojs/components";
-import { useLoad, navigateBack, getCurrentInstance } from "@tarojs/taro";
+import { useLoad, navigateBack, getCurrentInstance, pxTransform } from "@tarojs/taro";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { AtButton, AtIcon } from "taro-ui";
@@ -60,7 +60,7 @@ export default function ProductDetail() {
           indicatorColor="#999"
           indicatorActiveColor="#333"
           indicatorDots
-          style={{ height: "350px" }}
+          style={{ height: pxTransform(600) }}
           onChange={handleSwiperChange}
         >
           {detailData?.staticList.map((item, index) => (
@@ -78,9 +78,9 @@ export default function ProductDetail() {
         ) : null}
       </View>
       <View className="detail-info">
+        <View className="price">{detailData?.price}</View>
         <View className="title">{detailData?.title}</View>
         <View className="description">{detailData?.description}</View>
-        <View className="price">{detailData?.price}</View>
         <View className="like">
           <AtButton type="primary">
             <AtIcon value="heart"></AtIcon>
