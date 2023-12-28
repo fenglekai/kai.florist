@@ -1,23 +1,19 @@
 import { ScrollView, View, Text } from "@tarojs/components";
 import Card from "@/components/card";
-import {
-  AtActivityIndicator,
-  AtAvatar,
-  AtIcon,
-  AtList,
-  AtListItem,
-} from "taro-ui";
+import { AtActivityIndicator, AtAvatar, AtIcon } from "taro-ui";
 import { useEffect, useState } from "react";
 import WaterfallLayout from "@/components/waterfallLayout";
 import request from "@/utils/request";
 import { debounce } from "@/utils/common";
-import { getStorageSync, setStorageSync, navigateTo, pxTransform } from "@tarojs/taro";
+import {
+  getStorageSync,
+  navigateTo,
+  pxTransform,
+  useDidShow,
+} from "@tarojs/taro";
+import { useDispatch, useSelector } from "react-redux";
+import { resetUser } from "@/actions/user";
 import "./index.less";
-
-interface User {
-  username: string;
-  authorization: string;
-}
 
 export default function User() {
   const [likeList, setLickList] = useState<{ src: string }[]>([]);
@@ -42,66 +38,44 @@ export default function User() {
     // fetchData();
   }, [page]);
 
-  useEffect(() => {
+  useDidShow(() => {
     fetchUser();
-  }, []);
-
-  const [user, setUser] = useState<User>({
-    username: "未登录",
-    authorization: "",
   });
+
+  const dispatch = useDispatch();
+  const user = useSelector(
+    (state: { user: { username: string; authorization: string } }) => state.user
+  );
   async function fetchUser() {
     const userStore = getStorageSync("user");
-    if (!userStore) return;
-    if (
-      userStore.username === user.username &&
-      userStore.authorization === user.authorization
-    ) {
-      const valid = await verify(userStore.authorization);
-      if (!valid) {
-        setUser({
-          username: "未登录",
-          authorization: "",
-        });
-      }
+    if (userStore || user.authorization) {
+      await verify(userStore.authorization);
     } else {
-      setStorageSync("user", undefined);
-      setUser({
-        username: "未登录",
-        authorization: "",
-      });
+      dispatch(resetUser());
     }
   }
-  async function login() {
-    try {
-      const data = await request(`/api/user/login`, {
-        method: "post",
-        data: {
-          username: "test123",
-          password: "123456",
-        },
-      });
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
+
   async function verify(code: string) {
     try {
-      const data = await request(`/api/user/verify`, {
+      const data: any = await request(`/api/user/verify`, {
         params: {
           code,
         },
       });
-      return data.data.success || false;
+      if (!data.success) {
+        return dispatch(resetUser());
+      }
     } catch (error) {
       console.log(error);
     }
-    return false;
   }
 
-  function intoSetting() {
-    navigateTo({ url: "/pages/settings/index" });
+  async function intoSetting() {
+    if (!user.authorization) {
+      navigateTo({ url: "/pages/login/index" });
+    } else {
+      navigateTo({ url: "/pages/settings/index" });
+    }
   }
 
   function infoContentBuild() {
@@ -144,8 +118,18 @@ export default function User() {
       >
         <Text>更多设置</Text>
         <View>
-          <Text style={{fontSize: pxTransform(24), color: 'var(--fs-text-second-color)'}}>登录</Text>
-          <AtIcon value="chevron-right"></AtIcon>
+          <Text
+            style={{
+              fontSize: pxTransform(24),
+              color: "var(--fs-text-second-color)",
+            }}
+          >
+            {!user.authorization ? "登录查看更多设置" : ""}
+          </Text>
+          <AtIcon
+            value="chevron-right"
+            color="var(--fs-text-second-color)"
+          ></AtIcon>
         </View>
       </View>
     );

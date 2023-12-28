@@ -1,17 +1,12 @@
 import { disableNavBar, showNavBar } from "@/actions/page";
 import { View } from "@tarojs/components";
 import { useLoad, navigateBack } from "@tarojs/taro";
-import { useDispatch } from "react-redux";
-import {
-  AtButton,
-  AtList,
-  AtListItem,
-  AtModal,
-  AtNavBar,
-} from "taro-ui";
+import { useDispatch, useSelector } from "react-redux";
+import { AtButton, AtList, AtListItem, AtModal, AtNavBar } from "taro-ui";
 import Card from "@/components/card";
 import { useState } from "react";
 import { showToast } from "@/actions/toast";
+import { resetUser } from "@/actions/user";
 import "./index.less";
 
 export default function Settings() {
@@ -26,14 +21,19 @@ export default function Settings() {
   }
 
   function handleSave() {
-    dispatch(showToast({status: 'success' , text: '保存成功'}));
+    dispatch(showToast({ status: "success", text: "保存成功" }));
   }
 
   const [modal, setModal] = useState(false);
   function handleLogout() {
-    console.log("logout");
+    dispatch(resetUser());
     setModal(false);
+    handleBackClick();
   }
+
+  const user = useSelector(
+    (state: { user: { username: string; authorization: string } }) => state.user
+  );
 
   return (
     <View className="settings">
@@ -47,7 +47,7 @@ export default function Settings() {
           {{
             content: (
               <AtList hasBorder={false}>
-                <AtListItem title="username" arrow="right" />
+                <AtListItem title={user.username} arrow="right" />
                 <AtListItem title="wx-bind" hasBorder={false} arrow="right" />
               </AtList>
             ),

@@ -1,3 +1,4 @@
+import { getStorageSync } from "@tarojs/taro";
 import axios, { Canceler } from "axios";
 
 const service = axios.create({
@@ -12,6 +13,11 @@ service.interceptors.request.use(
     config.cancelToken = new axios.CancelToken((cancel) => {
       window._axiosPromiseArr.push({ cancel });
     });
+    // 添加token
+    const user = getStorageSync("user")
+    if (user.authorization) {
+      config.headers.Authorization = "Bearer " + user.authorization;
+    }
     return config;
   },
   function (error) {
@@ -43,7 +49,7 @@ service.interceptors.response.use(
       console.error("请求超时响应");
     }
     // 业务请求失败响应
-    if (error.response.data) {
+    if (error?.response?.data) {
       const responseData = error.response.data;
       console.error(
         responseData.msg ||
