@@ -8,10 +8,10 @@ import {
   AtListItem,
   AtModal,
   AtNavBar,
-  AtToast,
 } from "taro-ui";
 import Card from "@/components/card";
 import { useState } from "react";
+import { showToast } from "@/actions/toast";
 import "./index.less";
 
 export default function Settings() {
@@ -25,9 +25,8 @@ export default function Settings() {
     dispatch(showNavBar());
   }
 
-  const [saveMsg, setSaveMsg] = useState(false);
   function handleSave() {
-    setSaveMsg(true);
+    dispatch(showToast({status: 'success' , text: '保存成功'}));
   }
 
   const [modal, setModal] = useState(false);
@@ -61,7 +60,6 @@ export default function Settings() {
           退出登录
         </AtButton>
       </View>
-      <AtToast isOpened={saveMsg} text="保存成功"></AtToast>
       <AtModal
         isOpened={modal}
         title="确认退出吗？"

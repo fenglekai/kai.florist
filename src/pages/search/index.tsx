@@ -6,7 +6,7 @@ import {
   ScrollView,
 } from "@tarojs/components";
 import { useLoad, navigateBack } from "@tarojs/taro";
-import { AtButton, AtIcon, AtToast } from "taro-ui";
+import { AtButton, AtIcon } from "taro-ui";
 import { useReactChild } from "types";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -14,6 +14,7 @@ import CardInfo from "@/components/cardInfo";
 import EmptyCom from "@/components/emptyCom";
 import request from "@/utils/request";
 import { disableNavBar, showNavBar } from "@/actions/page";
+import { showToast } from "@/actions/toast";
 import "./index.less";
 import { homeList } from "../home";
 
@@ -29,7 +30,6 @@ export default function Search() {
   }
 
   const [searchInput, setSearchInput] = useState<string>("");
-  const [showToast, setShowToast] = useState(false);
 
   function onInput(e: { detail: { value: string } }) {
     setSearchInput(e.detail.value);
@@ -39,7 +39,8 @@ export default function Search() {
   }
 
   function handleSearch(keyword: string = searchInput) {
-    if (!keyword) return setShowToast(true);
+    if (!keyword)
+      return dispatch(showToast({ status: "error", text: "请输入关键词" }));
     getHomeData(keyword);
     setShowRecommend(false);
   }
@@ -92,7 +93,6 @@ export default function Search() {
             maxlength={20}
             value={searchInput}
             onInput={onInput}
-            onFocus={() => setShowToast(false)}
           />
         </View>
         <AtButton
@@ -171,12 +171,6 @@ export default function Search() {
           )}
         </ScrollView>
       )}
-
-      <AtToast
-        isOpened={showToast}
-        text="请输入关键词"
-        onClose={() => setShowToast(false)}
-      ></AtToast>
     </View>
   );
 }
