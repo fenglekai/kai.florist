@@ -6,6 +6,7 @@ import configStore from "./store";
 import "./app.less";
 import TabBar from "./components/tabBar";
 import { setRootVariable } from "./utils/cssVariable";
+import Toast from "./components/toast";
 
 function App({ children }: PropsWithChildren<any>) {
   useLaunch(() => {
@@ -18,6 +19,7 @@ function App({ children }: PropsWithChildren<any>) {
   return (
     <Provider store={store}>
       <TabBar />
+      <Toast />
       {children}
     </Provider>
   );
